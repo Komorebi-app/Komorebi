@@ -11,13 +11,16 @@ class AppTitle extends StatelessWidget{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Align(
+              Padding(
+                padding: EdgeInsets.only(right:20),
+                child:Align(
                   alignment: Alignment.center,
                   child: Image.asset("assets/KomorebiLogo.png",
-                  width: 100,
-                  fit : BoxFit.cover
+                  width: 90,
+                  fit : BoxFit.cover,
                   )
-                  ),           
+                  ),
+                ) ,          
               Align(
                 alignment: Alignment.center,
                 child: Text('Komorebi',

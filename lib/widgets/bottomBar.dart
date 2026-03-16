@@ -23,6 +23,10 @@ class BottomBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.library_books),
           label: "Collection"
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: "Rechercher"
         )
       ],
     );
