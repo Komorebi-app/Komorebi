@@ -1,4 +1,4 @@
-package com.example.komorebi
+package fr.threeguys.komorebi
 
 import io.flutter.embedding.android.FlutterActivity
 
