@@ -17,4 +17,4 @@ Nous nous réservons le droit de modifier cette Politique de Confidentialité à
 ## 5. Contactez-nous
 Si vous avez des questions concernant cette Politique de Confidentialité, vous pouvez nous contacter à l'adresse suivante :
 
-komorebi@gmail.com
+contactkomorebiapp@proton.me
