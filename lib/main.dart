@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'pages/homePage.dart';
+import 'pages/home_page.dart';
 import 'pages/collection.dart';
+import 'pages/search_page.dart';
 import 'widgets/appTitle.dart';
 import 'widgets/bottomBar.dart';
 
@@ -34,8 +35,8 @@ class _MainAppState extends State<MainApp> {
           ),
       body: [
         HomePage(),
-        Collection(
-        )
+        Collection(),
+        SearchPage()
       ][currentPage],
       bottomNavigationBar: BottomBar(changePage: _updateCurrentPage, currentIndex: currentPage)
       )
