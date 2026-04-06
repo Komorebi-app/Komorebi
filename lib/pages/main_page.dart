@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import './loginPage.dart';
+import '../theme/app_theme.dart';
 import './homePage.dart';
 import './collection.dart';
+import './search_page.dart';
 import '../widgets/appTitle.dart';
 import '../widgets/bottomBar.dart';
 
@@ -25,19 +26,21 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Color.fromRGBO(209, 250, 229, 1),
+    final colors = Theme.of(context).colorScheme;
+
+
+    return Scaffold(
+        backgroundColor: colors.primary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(160.0),
           child: AppTitle(),
           ),
       body: [
         HomePage(),
-        Collection()
+        Collection(),
+        SearchPage()
       ][currentPage],
       bottomNavigationBar: BottomBar(changePage: _updateCurrentPage, currentIndex: currentPage)
-      )
     );
   }
 }

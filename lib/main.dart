@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/main_page.dart';
+import 'package:komorebi/theme/app_theme.dart';
 import 'widgets/auth_wrapper.dart';
 
 
@@ -19,6 +19,10 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Komorebi',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       home: AuthWrapper(),
     );
   }

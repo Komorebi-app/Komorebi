@@ -20,34 +20,39 @@ class HomePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Container(
+    return SingleChildScrollView( 
+    child: Padding(
+      padding: const EdgeInsets.all(10.0), 
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center, 
+        mainAxisAlignment: MainAxisAlignment.start,  
+        children: [
+          Container(
             width: double.infinity,
-            margin: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width:320,
-                  height:280,
-                  child: InProgressReadCard()
+                const SizedBox(
+                  width: 320,
+                  height: 280,
+                  child: InProgressReadCard(),
                 ),
+                const SizedBox(height: 10), 
                 ElevatedButton(
-                  onPressed: (){logout(context);}, 
-                  child: Text('Déconnexion')
-                  )
+                  onPressed: () => logout(context),
+                  child: const Text('Déconnexion'),
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),
-        ),
+        ],
       ),
-    );
+    ),
+  );
   }
 
 }
