@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:komorebi/pages/loginPage.dart';
+import 'package:komorebi/pages/login_page.dart';
 import '../pages/main_page.dart';
 
 class AuthWrapper extends StatelessWidget {

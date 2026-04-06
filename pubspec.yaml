@@ -11,6 +11,7 @@ dependencies:
   dio: ^5.9.2
   flutter:
     sdk: flutter
+  adaptive_theme: ^3.7.2
 
 dev_dependencies:
   flutter_test:
@@ -22,10 +23,11 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/icon/
 
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 21
