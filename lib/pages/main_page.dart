@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import 'home_page.dart';
 import 'collection_page.dart';
 import './search_page.dart';
+import './profile_page.dart';
 import '../widgets/app_title.dart';
 import '../widgets/bottom_bar.dart';
 
@@ -38,7 +39,8 @@ class _MainPageState extends State<MainPage> {
       body: [
         HomePage(),
         Collection(),
-        SearchPage()
+        SearchPage(),
+        ProfilePage()
       ][currentPage],
       bottomNavigationBar: BottomBar(changePage: _updateCurrentPage, currentIndex: currentPage)
     );

@@ -30,7 +30,6 @@ class _MainAppState extends State<MainApp> {
         title: 'Komorebi',
         theme: theme,
         darkTheme: darkTheme,
-        themeMode: ThemeMode.system,
         home: AuthWrapper(),
       ),
     );
