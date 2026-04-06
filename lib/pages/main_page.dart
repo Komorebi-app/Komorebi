@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
-import './homePage.dart';
-import './collection.dart';
+import 'home_page.dart';
+import 'collection_page.dart';
 import './search_page.dart';
-import '../widgets/appTitle.dart';
-import '../widgets/bottomBar.dart';
+import '../widgets/app_title.dart';
+import '../widgets/bottom_bar.dart';
 
 
 
