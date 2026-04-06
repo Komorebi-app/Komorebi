@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/inProgressReadCard.dart';
+import '../widgets/in_progress_read_card.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'loginPage.dart';
+import 'login_page.dart';
 
 
 
