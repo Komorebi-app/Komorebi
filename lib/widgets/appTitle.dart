@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
+
 
 class AppTitle extends StatelessWidget{
   const AppTitle({super.key});
 
   @override
   Widget build(BuildContext context){
+    final colors = Theme.of(context).colorScheme;
+
+
     return Container(
-      color: Color.fromRGBO(209, 250, 229, 1),
+      color: colors.primary,
         child:SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
