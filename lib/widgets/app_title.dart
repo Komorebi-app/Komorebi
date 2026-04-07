@@ -30,7 +30,7 @@ class AppTitle extends StatelessWidget{
                 alignment: Alignment.center,
                 child: Text('Komorebi',
                  style: TextStyle(
-                  color: Color.fromRGBO(29, 87, 48, 1),
+                  color: colors.tertiary,
                   fontSize: 30
                  ),
                  )
@@ -39,7 +39,7 @@ class AppTitle extends StatelessWidget{
                 alignment: Alignment.center,
                 child: Text('Votre havre de lecture',
                  style: TextStyle(
-                  color: Color.fromRGBO(29, 87, 48, 1),
+                  color: colors.tertiary,
                   fontSize: 15
                  ),
                  )

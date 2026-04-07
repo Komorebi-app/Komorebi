@@ -27,6 +27,10 @@ class BottomBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
           label: "Rechercher"
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: "Profil"
         )
       ],
     );

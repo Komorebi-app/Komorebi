@@ -1,25 +1,14 @@
 import 'package:flutter/material.dart';
 import '../widgets/in_progress_read_card.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'login_page.dart';
 
 
 
 class HomePage extends StatelessWidget{
   const HomePage({super.key});
 
-  void logout(BuildContext context) async {
-  final storage = const FlutterSecureStorage();
-  await storage.delete(key: 'jwt_token');
-  Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(builder: (context) => const LoginPage()),
-    (route) => false,
-  );
-}
-
   @override
   Widget build(BuildContext context){
+    final colors = Theme.of(context).colorScheme;
     return SingleChildScrollView( 
     child: Padding(
       padding: const EdgeInsets.all(10.0), 
@@ -30,7 +19,7 @@ class HomePage extends StatelessWidget{
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colors.primaryContainer,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -41,10 +30,6 @@ class HomePage extends StatelessWidget{
                   child: InProgressReadCard(),
                 ),
                 const SizedBox(height: 10), 
-                ElevatedButton(
-                  onPressed: () => logout(context),
-                  child: const Text('Déconnexion'),
-                ),
                 const SizedBox(height: 10),
               ],
             ),

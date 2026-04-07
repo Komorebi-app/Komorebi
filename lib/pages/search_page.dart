@@ -21,7 +21,7 @@ class _SearchPageState extends State<SearchPage> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: colors.secondary,
+            color: colors.primaryContainer,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
