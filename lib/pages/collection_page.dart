@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class Collection extends StatefulWidget {
   const Collection({super.key});
 
@@ -20,11 +19,7 @@ class _CollectionState extends State<Collection> {
         color: colors.primaryContainer,
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Column(
-        children: [
-          Text('Collection page')
-        ],
-      )
+      child: Column(children: [Text('Collection page')]),
     );
   }
 }

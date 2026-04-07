@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class AppTheme {
   static const lightScheme = ColorScheme(
     brightness: Brightness.light,
@@ -51,7 +50,6 @@ class AppTheme {
     surfaceContainerHighest: Color(0xffe2e3d8),
   );
 
-
   static const darkScheme = ColorScheme(
     brightness: Brightness.dark,
     primary: Color(0xFF171917),
@@ -101,24 +99,11 @@ class AppTheme {
     surfaceContainerHighest: Color(0xff33362e),
   );
 
-
   static ThemeData get lightTheme {
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: lightScheme,
-    );
+    return ThemeData(useMaterial3: true, colorScheme: lightScheme);
   }
-
 
   static ThemeData get darkTheme {
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: darkScheme,
-    );
+    return ThemeData(useMaterial3: true, colorScheme: darkScheme);
   }
-
-
-
-
-
 }
