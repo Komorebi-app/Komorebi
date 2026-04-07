@@ -24,37 +24,26 @@ class _LoginFormState extends State<LoginForm> {
   Future<void> loginUser(String name, String password) async {
     final dio = Dio();
 
-    try{
+    try {
       final response = await dio.post(
         'http://10.0.2.2:8000/api/token/',
-        data :{
-          'username' : name,
-          'password' : password
-        }
-      ); 
-      
+        data: {'username': name, 'password': password},
+      );
 
       if (response.statusCode == 200) {
-        message = 'Connexion réussie'; 
+        message = 'Connexion réussie';
         await storage.write(key: 'jwt_token', value: response.data['access']);
-        if (context.mounted){
+        if (context.mounted) {
           Navigator.pushReplacement(
-            context, 
-            MaterialPageRoute(builder: (context) => const MainPage()));
+            context,
+            MaterialPageRoute(builder: (context) => const MainPage()),
+          );
         }
-        
       }
-    } on DioException catch (e) {
+    } on DioException {
       message = 'Erreur';
-
-
     }
   }
-
-
-
-
-
 
   @override
   void dispose() {
@@ -64,7 +53,6 @@ class _LoginFormState extends State<LoginForm> {
     passwordController.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -73,21 +61,17 @@ class _LoginFormState extends State<LoginForm> {
         child: Form(
           key: _formKey,
           child: Column(
-              children:  [
-                Text('Connexion',
-                  style: TextStyle(
-                    fontSize: 30,
-                  )
-                ),
-                TextFormField(
+            children: [
+              Text('Connexion', style: TextStyle(fontSize: 30)),
+              TextFormField(
                 decoration: InputDecoration(
                   labelText: "Nom de compte",
-                  hintText : "Entrer votre nom de compte"
+                  hintText: "Entrer votre nom de compte",
                 ),
-                validator: (value){
-                  if(value == null || value.isEmpty){
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
                     return "Champ non valide";
-                    }
+                  }
                   return null;
                 },
                 controller: nameController,
@@ -99,53 +83,52 @@ class _LoginFormState extends State<LoginForm> {
                 enableSuggestions: false,
                 decoration: InputDecoration(
                   labelText: "Mot de passe",
-                  hintText : "Votre mot de passe",
+                  hintText: "Votre mot de passe",
                   suffixIcon: IconButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        _isObscured = ! _isObscured;
+                        _isObscured = !_isObscured;
                       });
-                    }, 
+                    },
                     icon: Icon(
-                      _isObscured ? Icons.visibility : Icons.visibility_off
-                    ))
+                      _isObscured ? Icons.visibility : Icons.visibility_off,
+                    ),
+                  ),
                 ),
-                validator: (value){
-                  if(value == null || value.isEmpty){
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
                     return "Champ non valide";
-                    }
+                  }
                   return null;
                 },
                 controller: passwordController,
               ),
-              SizedBox(height: 30,),
+              SizedBox(height: 30),
               ElevatedButton(
-                onPressed: (){
-                  if (_formKey.currentState!.validate()){
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
                     nameAccount = nameController.text;
                     passwordAccount = passwordController.text;
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(message))
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(message)));
                     FocusScope.of(context).requestFocus(FocusNode());
                   }
                   loginUser(nameAccount, passwordAccount);
-                }, 
-                child: Text(
-                  "Connexion"
-                )),
-                SizedBox(height:20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Pas encore de compte ?"),
-                    TextButton(
-                      onPressed: (){}, 
-                      child: Text("Créer un compte"))
-                  ]
-                )
-              ]),
+                },
+                child: Text("Connexion"),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Pas encore de compte ?"),
+                  TextButton(onPressed: () {}, child: Text("Créer un compte")),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
