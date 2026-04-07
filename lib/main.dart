@@ -1,12 +1,23 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:komorebi/pages/main_page.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:komorebi/theme/app_theme.dart';
-import 'widgets/auth_wrapper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import './features/theme/theme_cubit.dart';
+import './theme/app_theme.dart';
 
-void main() {
-  runApp(const MainApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: HydratedStorageDirectory((await getTemporaryDirectory()).path),
+  );
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context)=> ThemeCubit()),
+    ], 
+    child: const MainApp())
+    );
 }
-
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
@@ -17,16 +28,16 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: AppTheme.lightTheme,
-      dark: AppTheme.darkTheme,
-      initial: AdaptiveThemeMode.light,
-      builder: (theme, darkTheme) => MaterialApp(
-        title: 'Komorebi',
-        theme: theme,
-        darkTheme: darkTheme,
-        home: AuthWrapper(),
-      ),
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, themeMode) {
+        return MaterialApp(
+            themeMode: themeMode,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            title: 'Komorebi',
+            home: MainPage()
+          );
+      }
     );
   }
 }
