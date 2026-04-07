@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
           );
         }
       }
-    } on DioException catch (e) {
+    } on DioException {
       message = 'Erreur';
     }
   }
