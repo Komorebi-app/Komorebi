@@ -1,109 +1,269 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const lightScheme = ColorScheme(
+  // Nouvelles couleurs de marque
+  static const Color primary = Color(0xFF92D6B5);
+  static const Color secondary = Color(0xFF5FB89A);
+  static const Color tertiary = Color(0xFF064E3B);
+
+  // Couleurs de fond
+  static const Color background = Color(0xFFF9FAFB);
+  static const Color backgroundDark = Color(0xFF111827);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color surfaceDark = Color(0xFF1F2937);
+
+  // Couleurs de texte
+  static const Color textPrimary = Color(0xFF111827);
+  static const Color textPrimaryDark = Color(0xFFF9FAFB);
+  static const Color textSecondary = Color(0xFF4B5563);
+  static const Color textSecondaryDark = Color(0xFFD1D5DB);
+  static const Color textTertiary = Color(0xFF336B5C);
+  static const Color textTertiaryDark = Color(0xFF92D6B5);
+
+  // Couleurs système & bordures
+  static const Color success = Color(0xFF10B981);
+  static const Color error = Color(0xFFEF4444);
+  static const Color border = Color(0xFFE5E7EB);
+  static const Color borderDark = Color(0xFF374151);
+
+  // --- THÈME CLAIR ---
+  static ThemeData lightTheme = ThemeData(
+    useMaterial3: true,
     brightness: Brightness.light,
-    primary: Color(0xFFBCEBD0),
-    surfaceTint: Color(0xff4c662b),
-    onPrimary: Color(0xffffffff),
-    primaryContainer: Color(0xFFFFFFFF),
-    onPrimaryContainer: Color(0xff354e16),
-    secondary: Color(0xFFFFFFFF),
-    onSecondary: Color(0xffffffff),
-    secondaryContainer: Color(0xffdce7c8),
-    onSecondaryContainer: Color(0xff404a33),
-    tertiary: Color(0xFF1D5730),
-    onTertiary: Color(0xffffffff),
-    tertiaryContainer: Color(0xffbcece7),
-    onTertiaryContainer: Color(0xff1f4e4b),
-    error: Color(0xffba1a1a),
-    onError: Color(0xffffffff),
-    errorContainer: Color(0xffffdad6),
-    onErrorContainer: Color(0xff93000a),
-    surface: Color(0xfff9faef),
-    onSurface: Color(0xff1a1c16),
-    onSurfaceVariant: Color(0xff44483d),
-    outline: Color(0xff75796c),
-    outlineVariant: Color(0xffc5c8ba),
-    shadow: Color(0xff000000),
-    scrim: Color(0xff000000),
-    inverseSurface: Color(0xff2f312a),
-    inversePrimary: Color(0xffb1d18a),
-    primaryFixed: Color(0xffcdeda3),
-    onPrimaryFixed: Color(0xff102000),
-    primaryFixedDim: Color(0xffb1d18a),
-    onPrimaryFixedVariant: Color(0xff354e16),
-    secondaryFixed: Color(0xffdce7c8),
-    onSecondaryFixed: Color(0xff151e0b),
-    secondaryFixedDim: Color(0xffbfcbad),
-    onSecondaryFixedVariant: Color(0xff404a33),
-    tertiaryFixed: Color(0xffbcece7),
-    onTertiaryFixed: Color(0xff00201e),
-    tertiaryFixedDim: Color(0xffa0d0cb),
-    onTertiaryFixedVariant: Color(0xff1f4e4b),
-    surfaceDim: Color(0xffdadbd0),
-    surfaceBright: Color(0xfff9faef),
-    surfaceContainerLowest: Color(0xffffffff),
-    surfaceContainerLow: Color(0xfff3f4e9),
-    surfaceContainer: Color(0xffeeefe3),
-    surfaceContainerHigh: Color(0xffe8e9de),
-    surfaceContainerHighest: Color(0xffe2e3d8),
+
+    colorScheme: const ColorScheme.light(
+      primary: primary,
+      secondary: secondary,
+      tertiary: tertiary,
+      surface: surface,
+      error: error,
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
+      onTertiary: Colors.white,
+      onSurface: textPrimary,
+    ),
+
+    scaffoldBackgroundColor: background,
+
+    appBarTheme: const AppBarTheme(
+      backgroundColor: surface,
+      foregroundColor: textPrimary,
+      elevation: 0,
+      centerTitle: false,
+      titleTextStyle: TextStyle(
+        color: textPrimary,
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+
+    cardTheme: CardThemeData(
+      color: surface,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: border, width: 1),
+      ),
+    ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: primary,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: surface,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: border),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(
+          color: secondary,
+          width: 2,
+        ), // Utilise secondary pour le focus
+      ),
+    ),
+
+    textSelectionTheme: _textSelectionTheme(),
+    textTheme: _buildTextTheme(textPrimary, textSecondary, textTertiary),
+
+    // Bottom Navigation Bar
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: surface,
+      selectedItemColor: primary,
+      unselectedItemColor: textTertiary,
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      selectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+      unselectedLabelStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
   );
 
-  static const darkScheme = ColorScheme(
+  // --- THÈME SOMBRE ---
+  static ThemeData darkTheme = ThemeData(
+    useMaterial3: true,
     brightness: Brightness.dark,
-    primary: Color(0xFF171917),
-    surfaceTint: Color(0xffb1d18a),
-    onPrimary: Color(0xff1f3701),
-    primaryContainer: Color(0xFF5E5E5E),
-    onPrimaryContainer: Color(0xffcdeda3),
-    secondary: Color(0xffbfcbad),
-    onSecondary: Color(0xff2a331e),
-    secondaryContainer: Color(0xff404a33),
-    onSecondaryContainer: Color(0xffdce7c8),
-    tertiary: Color(0xFFFFFFFF),
-    onTertiary: Color(0xff003735),
-    tertiaryContainer: Color(0xff1f4e4b),
-    onTertiaryContainer: Color(0xffbcece7),
-    error: Color(0xffffb4ab),
-    onError: Color(0xff690005),
-    errorContainer: Color(0xff93000a),
-    onErrorContainer: Color(0xffffdad6),
-    surface: Color(0xff12140e),
-    onSurface: Color(0xffe2e3d8),
-    onSurfaceVariant: Color(0xffc5c8ba),
-    outline: Color(0xff8f9285),
-    outlineVariant: Color(0xff44483d),
-    shadow: Color(0xff000000),
-    scrim: Color(0xff000000),
-    inverseSurface: Color(0xffe2e3d8),
-    inversePrimary: Color(0xff4c662b),
-    primaryFixed: Color(0xffcdeda3),
-    onPrimaryFixed: Color(0xff102000),
-    primaryFixedDim: Color(0xffb1d18a),
-    onPrimaryFixedVariant: Color(0xff354e16),
-    secondaryFixed: Color(0xffdce7c8),
-    onSecondaryFixed: Color(0xff151e0b),
-    secondaryFixedDim: Color(0xffbfcbad),
-    onSecondaryFixedVariant: Color(0xff404a33),
-    tertiaryFixed: Color(0xffbcece7),
-    onTertiaryFixed: Color(0xff00201e),
-    tertiaryFixedDim: Color(0xffa0d0cb),
-    onTertiaryFixedVariant: Color(0xff1f4e4b),
-    surfaceDim: Color(0xff12140e),
-    surfaceBright: Color(0xff383a32),
-    surfaceContainerLowest: Color(0xff0c0f09),
-    surfaceContainerLow: Color(0xff1a1c16),
-    surfaceContainer: Color(0xff1e201a),
-    surfaceContainerHigh: Color(0xff282b24),
-    surfaceContainerHighest: Color(0xff33362e),
+
+    colorScheme: const ColorScheme.dark(
+      primary: primary,
+      secondary: secondary,
+      tertiary: tertiary,
+      surface: surfaceDark,
+      onSurface: textPrimaryDark,
+      error: error,
+    ),
+
+    scaffoldBackgroundColor: backgroundDark,
+
+    appBarTheme: const AppBarTheme(
+      backgroundColor: backgroundDark,
+      foregroundColor: textPrimaryDark,
+      elevation: 0,
+      titleTextStyle: TextStyle(
+        color: textPrimaryDark,
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+
+    cardTheme: CardThemeData(
+      color: surfaceDark,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: borderDark, width: 1),
+      ),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: const Color(0xFF111827),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: borderDark),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(
+          color: tertiary,
+          width: 2,
+        ), // Utilise tertiary pour le focus sombre
+      ),
+    ),
+
+    textSelectionTheme: _textSelectionTheme(),
+    textTheme: _buildTextTheme(
+      textPrimaryDark,
+      textSecondaryDark,
+      textTertiaryDark,
+    ),
+
+    // Navigation Bar
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: surfaceDark,
+      selectedItemColor: primary,
+      unselectedItemColor: textTertiary,
+      elevation: 8,
+    ),
   );
 
-  static ThemeData get lightTheme {
-    return ThemeData(useMaterial3: true, colorScheme: lightScheme);
+  static TextSelectionThemeData _textSelectionTheme() {
+    return TextSelectionThemeData(
+      cursorColor: primary.withAlpha(150),
+      selectionHandleColor: primary.withAlpha(150),
+      selectionColor: primary.withAlpha(100),
+    );
   }
 
-  static ThemeData get darkTheme {
-    return ThemeData(useMaterial3: true, colorScheme: darkScheme);
+  // Helper pour ne pas répéter la configuration typo
+  static TextTheme _buildTextTheme(Color pColor, Color sColor, Color tColor) {
+    return TextTheme(
+      displayLarge: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.w600,
+        color: pColor,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+        color: pColor,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+        color: pColor,
+      ),
+      headlineLarge: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w600,
+        color: pColor,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: pColor,
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: pColor,
+      ),
+      titleLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: pColor,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: pColor,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        color: pColor,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: pColor,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: sColor,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: sColor,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: sColor,
+      ),
+      labelMedium: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        color: sColor,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.w500,
+        color: tColor,
+      ),
+    );
   }
 }

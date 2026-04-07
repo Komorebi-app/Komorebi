@@ -28,14 +28,18 @@ class AppTitle extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 'Komorebi',
-                style: TextStyle(color: colors.tertiary, fontSize: 30),
+                style: Theme.of(context).textTheme.displayLarge!.apply(
+                  color: Theme.of(context).colorScheme.tertiary
+                ),
               ),
             ),
             Align(
               alignment: Alignment.center,
               child: Text(
                 'Votre havre de lecture',
-                style: TextStyle(color: colors.tertiary, fontSize: 15),
+                style: Theme.of(context).textTheme.titleLarge!.apply(
+                  color: Theme.of(context).colorScheme.tertiary
+                ),
               ),
             ),
           ],

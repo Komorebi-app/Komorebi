@@ -14,8 +14,7 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       onTap: (index) => changePage(index),
-      selectedItemColor: Color.fromRGBO(29, 87, 48, 1),
-      unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
       currentIndex: currentIndex,
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Accueil"),

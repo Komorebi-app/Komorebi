@@ -10,16 +10,10 @@ class Collection extends StatefulWidget {
 class _CollectionState extends State<Collection> {
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: colors.primaryContainer,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(children: [Text('Collection page')]),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [Text('Collection page')],
     );
   }
 }

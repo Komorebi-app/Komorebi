@@ -10,18 +10,7 @@ class InProgressReadCard extends StatefulWidget {
 class _InProgressReadCardState extends State<InProgressReadCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 10.0,
-            color: Colors.black.withValues(alpha: 0.2),
-            offset: Offset(2, 5),
-          ),
-        ],
-      ),
+    return Card(
       child: Padding(
         padding: EdgeInsetsGeometry.only(right: 15),
         child: Column(
@@ -44,13 +33,6 @@ class _InProgressReadCardState extends State<InProgressReadCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'En cours',
-                        style: TextStyle(
-                          color: Color.fromRGBO(29, 87, 48, 1),
-                          fontSize: 20,
-                        ),
-                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -58,33 +40,21 @@ class _InProgressReadCardState extends State<InProgressReadCard> {
                             padding: EdgeInsetsGeometry.only(top: 10),
                             child: Text(
                               'Burn the house down',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight(1000),
-                              ),
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsGeometry.only(top: 5),
                             child: Text(
                               'Moyashi Fujisawa',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight(500),
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsGeometry.only(top: 5),
                             child: Text(
                               'Tome 3',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight(500),
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                         ],
