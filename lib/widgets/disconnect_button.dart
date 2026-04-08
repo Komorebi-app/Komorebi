@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../pages/login_page.dart';
+import 'package:go_router/go_router.dart';
 
 class DisconnectButton extends StatefulWidget {
   const DisconnectButton({super.key});
@@ -15,11 +15,9 @@ class _DisconnectButtonState extends State<DisconnectButton> {
     void logout(BuildContext context) async {
       final storage = const FlutterSecureStorage();
       await storage.delete(key: 'jwt_token');
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-        (route) => false,
-      );
+      if (context.mounted) {
+        context.push<void>('/auth');
+      }
     }
 
     return ElevatedButton(

@@ -1,19 +1,18 @@
-import 'package:komorebi/pages/main_page.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:komorebi/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './features/theme/theme_cubit.dart';
 import './theme/app_theme.dart';
+import './app_router.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: HydratedStorageDirectory((await getTemporaryDirectory()).path),
-  );
+  await initDependencies();
+
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(create: (context)=> ThemeCubit()),
+      BlocProvider(create: (context)=> getIt<AuthBloc>()),
     ], 
     child: const MainApp())
     );
@@ -30,12 +29,12 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, themeMode) {
-        return MaterialApp(
+        return MaterialApp.router(
             themeMode: themeMode,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             title: 'Komorebi',
-            home: MainPage()
+            routerConfig: appRouter,
           );
       }
     );
