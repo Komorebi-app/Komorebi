@@ -66,36 +66,9 @@ class AppTheme {
       ),
     ),
 
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: primary,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-    ),
-
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: Colors.white,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        side: const BorderSide(
-          color: primary,
-        ),
-      ),
-    ),
-
-    filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
-        foregroundColor: Colors.white,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-    ),
+    elevatedButtonTheme: _elevatedBtn(),
+    outlinedButtonTheme: _outlinedBtn(),
+    filledButtonTheme: _filledBtn(),
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -167,26 +140,9 @@ class AppTheme {
       ),
     ),
 
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: Colors.white,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        side: const BorderSide(
-          color: primary,
-        ),
-      ),
-    ),
-
-    filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
-        foregroundColor: Colors.white,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-    ),
+    elevatedButtonTheme: _elevatedBtn(),
+    outlinedButtonTheme: _outlinedBtn(),
+    filledButtonTheme: _filledBtn(),
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -305,6 +261,41 @@ class AppTheme {
         fontSize: 10,
         fontWeight: FontWeight.w500,
         color: tColor,
+      ),
+    );
+  }
+
+  static ElevatedButtonThemeData _elevatedBtn() {
+    return ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: primary,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    );
+  }
+
+  static OutlinedButtonThemeData _outlinedBtn() {
+    return OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Colors.white,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        side: const BorderSide(color: primary),
+      ),
+    );
+  }
+
+  static FilledButtonThemeData _filledBtn() {
+    return FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        foregroundColor: Colors.white,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }

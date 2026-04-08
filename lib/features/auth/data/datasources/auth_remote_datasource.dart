@@ -1,20 +1,43 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:komorebi/app_config.dart';
 import 'package:komorebi/exceptions.dart';
 import 'package:komorebi/features/auth/data/models/user_model.dart';
+import 'package:komorebi/features/auth/domain/services/auth_service.dart';
 
 abstract interface class AuthRemoteDatasource {
-  Future<bool> login({required String username, required String password});
   Future<UserModel?> getUser();
+  Future<bool> login({required String username, required String password});
+  Future<void> logout();
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   final Dio dio;
-  final FlutterSecureStorage storage;
+  final AuthService service;
   final String apiUrl = AppConfig.apiUrl;
 
-  AuthRemoteDatasourceImpl({required this.dio, required this.storage});
+  AuthRemoteDatasourceImpl({required this.dio, required this.service});
+
+  @override
+  Future<UserModel?> getUser() async {
+    try {
+      String? token = await service.getToken();
+      final response = await dio.get(
+        '$apiUrl/user/me/',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+          validateStatus: (status) => [200, 401].contains(status!),
+        ),
+      );
+
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        return UserModel.fromMap(response.data);
+      }
+      return null;
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
 
   @override
   Future<bool> login({
@@ -28,7 +51,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       );
 
       if (response.statusCode == 200) {
-        await storage.write(key: 'jwt_token', value: response.data['access']);
+        await service.saveToken(response.data['access']);
         return true;
       }
     } on DioException catch (e) {
@@ -39,18 +62,9 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   }
 
   @override
-  Future<UserModel?> getUser() async {
+  Future<void> logout() async {
     try {
-      String? token = await storage.read(key: 'jwt_token');
-      final response = await dio.post(
-        '$apiUrl/user/me',
-        options: Options(headers: {'Authorization': 'Bearer $token'}),
-      );
-
-      if (response.statusCode == 200) {
-        await storage.write(key: 'jwt_token', value: response.data['access']);
-      }
-      return null;
+      await service.logout();
     } catch (e) {
       throw ServerException(message: e.toString());
     }

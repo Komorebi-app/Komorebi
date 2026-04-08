@@ -7,8 +7,10 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:komorebi/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:komorebi/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:komorebi/features/auth/domain/repositories/auth_repository.dart';
+import 'package:komorebi/features/auth/domain/services/auth_service.dart';
 import 'package:komorebi/features/auth/domain/usecases/get_user.dart';
 import 'package:komorebi/features/auth/domain/usecases/login.dart';
+import 'package:komorebi/features/auth/domain/usecases/logout.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -20,34 +22,43 @@ Future<void> initDependencies() async {
   await dotenv.load(fileName: '.env');
 
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: HydratedStorageDirectory((await getTemporaryDirectory()).path),
+    storageDirectory: HydratedStorageDirectory(
+      (await getTemporaryDirectory()).path,
+    ),
   );
 
   getIt.registerSingleton(Dio());
-  getIt.registerSingleton(FlutterSecureStorage());
+  getIt.registerSingleton(
+    FlutterSecureStorage(
+      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    ),
+  );
 
   initAuth();
 }
 
 void initAuth() {
   getIt
+    // Services
+    ..registerFactory<AuthService>(
+      () => AuthService(getIt())
+    )
     // Datasource
     ..registerFactory<AuthRemoteDatasource>(
-      () => AuthRemoteDatasourceImpl(
-        dio: getIt(),
-        storage: getIt()
-      ),
+      () => AuthRemoteDatasourceImpl(dio: getIt(), service: getIt()),
     )
     // Repositories
     ..registerCachedFactory<AuthRepository>(() => AuthRepositoryImpl(getIt()))
     // Usecases
-    ..registerFactory<Login>(() => Login(getIt()))
     ..registerFactory<GetUser>(() => GetUser(getIt()))
+    ..registerFactory<Login>(() => Login(getIt()))
+    ..registerFactory<Logout>(() => Logout(getIt()))
     // Bloc
     ..registerLazySingleton<AuthBloc>(
       () => AuthBloc(
-        login: getIt(),
         getUser: getIt(),
-      )
+        login: getIt(),
+        logout: getIt()
+      ),
     );
 }

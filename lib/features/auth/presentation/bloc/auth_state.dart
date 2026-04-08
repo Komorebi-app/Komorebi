@@ -9,7 +9,8 @@ abstract class AuthState extends Equatable {
 class AuthInitial extends AuthState {}
 
 final class AuthSuccess extends AuthState {
-  final UserModel user;
+  final UserModel? user;
+
   const AuthSuccess({required this.user});
 }
 
@@ -21,4 +22,10 @@ final class AuthFailure extends AuthState {
 
 final class AuthLoading extends AuthState {}
 
-final class AuthLoggingSuccess extends AuthState {}
+final class AuthLoggingSuccess extends AuthState {
+  final bool isLogged;
+
+  const AuthLoggingSuccess({required this.isLogged});
+}
+
+final class AuthLoggoutSuccess extends AuthState {}

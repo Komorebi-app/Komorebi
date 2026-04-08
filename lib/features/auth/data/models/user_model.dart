@@ -15,18 +15,18 @@ class UserModel extends User {
     return <String, dynamic>{
       'id': id,
       'email': email,
-      'firstname': firstname,
-      'lastname': lastname,
+      'first_name': firstname,
+      'last_name': lastname,
       'username': username,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] as String,
+      id: map['id'] as int,
       email: map['email'] as String,
-      firstname: map['firstname'] as String,
-      lastname: map['lastname'] as String,
+      firstname: map['first_name'] as String,
+      lastname: map['last_name'] as String,
       username: map['username'] as String,
     );
   }

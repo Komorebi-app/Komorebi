@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isObscured = true;
+  bool loading = false;
   final _formKey = GlobalKey<FormState>();
   final storage = const FlutterSecureStorage();
 
@@ -28,12 +29,24 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void handleLogin() {
-    context.read<AuthBloc>().add(
-      AuthLoginEvent(
-        username: nameController.text,
-        password: passwordController.text,
-      ),
-    );
+    setState(() {
+      loading = true;
+    });
+
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    if (_formKey.currentState?.validate() ?? false) {
+      context.read<AuthBloc>().add(
+        AuthLoginEvent(
+          username: nameController.text.trim(),
+          password: passwordController.text.trim(),
+        ),
+      );
+    }
+
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -42,7 +55,13 @@ class _LoginPageState extends State<LoginPage> {
       listener: (BuildContext context, state) {
         switch (state) {
           case AuthLoggingSuccess _:
-            context.replace('/');
+            if (state.isLogged) {
+              context.replace('/');
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Erreur lors de la connexion")),
+              );
+            }
             break;
           case AuthFailure _:
             // ignore: avoid_print
@@ -120,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 30),
                     FilledButton(
                       onPressed: () => handleLogin(),
-                      child: Text("Se connecter"),
+                      child: loading ? CircularProgressIndicator.adaptive() : Text("Se connecter"),
                     ),
                     SizedBox(height: 20),
                     Row(

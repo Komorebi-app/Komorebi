@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/switch_button.dart';
-import '../widgets/disconnect_button.dart';
+import '../../../../widgets/switch_button.dart';
+import '../../../../widgets/disconnect_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

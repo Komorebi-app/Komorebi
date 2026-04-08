@@ -9,6 +9,17 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDatasource authRemoteDatasource;
 
   AuthRepositoryImpl(this.authRemoteDatasource);
+  
+  @override
+  Future<Either<Failure, UserModel?>> getUser() async {
+    try {
+      return right(await authRemoteDatasource.getUser());
+    } on ServerException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    }
+  }
 
   @override
   Future<Either<Failure, bool>> login({
@@ -28,14 +39,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
   
   @override
-  Future<Either<Failure, UserModel>> getUser() async {
+  Future<Either<Failure, void>> logout() async {
     try {
-      final user = await authRemoteDatasource.getUser();
-      if (user != null) {
-        return right(user);
-      } else {
-        return left(ServerFailure(message: "User not logged in"));
-      }
+      return right(await authRemoteDatasource.logout());
     } on ServerException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
