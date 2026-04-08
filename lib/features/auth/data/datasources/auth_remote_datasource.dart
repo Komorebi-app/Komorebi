@@ -32,6 +32,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         return true;
       }
     } on DioException catch (e) {
+      // ignore: avoid_print
       print(e);
     }
     return false;

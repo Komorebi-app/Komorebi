@@ -45,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
             context.replace('/');
             break;
           case AuthFailure _:
+            // ignore: avoid_print
             print(state.message);
             ScaffoldMessenger.of(
               context,

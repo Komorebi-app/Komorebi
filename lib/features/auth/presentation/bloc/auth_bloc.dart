@@ -24,7 +24,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthGetUserEvent>(
       (event, emit) => _onGetUserEvent(event, emit),
     );
-    add(AuthGetUserEvent());
   }
 
   Future<void> _onLoginEvent(
