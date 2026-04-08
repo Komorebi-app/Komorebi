@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:komorebi/failure.dart';
+import 'package:komorebi/errors/failure.dart';
 import 'package:komorebi/features/auth/domain/repositories/auth_repository.dart';
 import 'package:komorebi/usecase.dart';
 

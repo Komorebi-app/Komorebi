@@ -29,3 +29,9 @@ final class AuthLoggingSuccess extends AuthState {
 }
 
 final class AuthLoggoutSuccess extends AuthState {}
+
+final class AuthRegisterSuccess extends AuthState {
+  final bool isRegistred;
+
+  const AuthRegisterSuccess({required this.isRegistred});
+}

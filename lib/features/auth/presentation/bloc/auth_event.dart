@@ -17,3 +17,19 @@ class AuthLoginEvent extends AuthEvent {
 class AuthGetUserEvent extends AuthEvent {}
 
 class AuthLogoutEvent extends AuthEvent {}
+
+class AuthRegisterEvent extends AuthEvent {
+  final String username;
+  final String firstname;
+  final String lastname;
+  final String email;
+  final String password;
+
+  const AuthRegisterEvent({
+    required this.username,
+    required this.firstname,
+    required this.lastname,
+    required this.email,
+    required this.password,
+  });
+}

@@ -4,31 +4,37 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   bool _isObscured = true;
   bool loading = false;
   final _formKey = GlobalKey<FormState>();
   final storage = const FlutterSecureStorage();
 
-  final nameController = TextEditingController();
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+  final firstController = TextEditingController();
+  final lastController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
 
-    nameController.dispose();
+    usernameController.dispose();
+    emailController.dispose();
+    firstController.dispose();
+    lastController.dispose();
     passwordController.dispose();
   }
 
-  void handleLogin() {
+  void handleRegister() {
     setState(() {
       loading = true;
     });
@@ -37,8 +43,11 @@ class _LoginPageState extends State<LoginPage> {
 
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(
-        AuthLoginEvent(
-          username: nameController.text.trim(),
+        AuthRegisterEvent(
+          username: usernameController.text.trim(),
+          firstname: usernameController.text.trim(),
+          lastname: usernameController.text.trim(),
+          email: usernameController.text.trim(),
           password: passwordController.text.trim(),
         ),
       );
@@ -54,8 +63,8 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, state) {
         switch (state) {
-          case AuthLoggingSuccess _:
-            if (state.isLogged) {
+          case AuthRegisterSuccess _:
+            if (state.isRegistred) {
               context.replace('/');
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -84,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: .center,
                   children: [
                     Text(
-                      'Connexion',
+                      'Inscription',
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                     Padding(
@@ -102,7 +111,46 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
-                      controller: nameController,
+                      controller: usernameController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Nom",
+                        hintText: "Entrer votre nom",
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Champ non valide";
+                        }
+                        return null;
+                      },
+                      controller: lastController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Prénom",
+                        hintText: "Entrer votre prénom",
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Champ non valide";
+                        }
+                        return null;
+                      },
+                      controller: firstController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Email",
+                        hintText: "Entrer votre email",
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Champ non valide";
+                        }
+                        return null;
+                      },
+                      controller: emailController,
                     ),
                     TextFormField(
                       obscureText: _isObscured,
@@ -133,20 +181,20 @@ class _LoginPageState extends State<LoginPage> {
                       controller: passwordController,
                     ),
                     FilledButton(
-                      onPressed: () => handleLogin(),
+                      onPressed: () => handleRegister(),
                       child: loading
                           ? CircularProgressIndicator.adaptive()
-                          : Text("Se connecter"),
+                          : Text("S'inscrire"),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Pas encore de compte ?"),
+                        Text("Vous avez déjà un compte ?"),
                         TextButton(
                           onPressed: () {
-                            context.replace('/auth/register');
+                            context.replace('/auth/login');
                           },
-                          child: Text("Créer un compte"),
+                          child: Text("Se connection"),
                         ),
                       ],
                     ),
