@@ -44,7 +44,10 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     const Spacer(),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 8,
+                      ),
                       child: Column(
                         spacing: 8,
                         crossAxisAlignment: .stretch,
