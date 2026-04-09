@@ -13,7 +13,12 @@ class DisconnectButton extends StatefulWidget {
 class _DisconnectButtonState extends State<DisconnectButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Theme.of(context).colorScheme.error,
+        side: BorderSide(color: Theme.of(context).colorScheme.error),
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 48),
+      ),
       onPressed: () {
         context.read<AuthBloc>().add(AuthLogoutEvent());
         if (context.mounted) {
