@@ -1,43 +1,88 @@
+import 'dart:developer';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:komorebi/config/app_config.dart';
+import 'package:komorebi/features/auth/domain/services/auth_service.dart';
+import 'package:komorebi/init_dependencies.dart';
 import './file_picker.dart';
 
-const List<String>languages =['Français', 'Anglais','Espagnol','Italien','Allemand','Russe', 'Autre' ];
+const List<String>languages =['Fr', 'En','Es','It','Al','Ru' ];
+enum ApiStatus {idle, loading, success, error}
+
 
 class AddNewBookForm extends StatefulWidget {
-  const AddNewBookForm({super.key});
+  final Function() closeModalFunction;
+  const AddNewBookForm({super.key, required this.closeModalFunction});
+  
   
   @override
   State<AddNewBookForm> createState() => _AddNewBookFormState();
 }
 
 class _AddNewBookFormState extends State<AddNewBookForm> {
+  final dio = Dio();
   final titleController = TextEditingController();
   final authorController = TextEditingController();
   final isbnNumberController = TextEditingController();
   String dropDownValue = languages.first;
-  String? imageCover;
+  PlatformFile? imageCover;
   String message = '';
-  final dio = Dio();
+  ApiStatus status = ApiStatus.idle;
 
-
-  void handleImage(String data) {
+  void handleImage(PlatformFile data) {
     setState(() {
       imageCover = data;
     });
   }
 
-  Future<void> addNewBook() async {
-    try {
-      final response = await dio.post(
-        '',
-        data:{}
-      );
 
-    } on DioException {
-      message = 'Erreur';
+
+  Future<void> addNewBook() async {
+    setState(() => status = ApiStatus.loading);
+    if (imageCover == null || imageCover!.path == null) {
+      setState(() {
+        message = "Veuillez sélectionner une image";
+      });
+      return; 
     }
 
+    try {
+      FormData formData = FormData.fromMap({
+        'isbn': isbnNumberController.text.trim(),
+        'title': titleController.text.trim(),
+        'author': authorController.text.trim(),
+        'language': dropDownValue,
+        'image': await MultipartFile.fromFile(
+          imageCover!.path!, 
+          filename: imageCover!.name,
+        ),
+      });
+    
+        final response = await dio.post(
+          '${AppConfig.apiUrl}/book/add-manual-to-library/',
+          data:formData, options: Options(
+            headers: {
+              'Authorization': 'Bearer ${await AuthService(getIt<FlutterSecureStorage>()).getToken()}' 
+            },
+            contentType: 'multipart/form-data'
+          )
+        );
+        if(response.statusCode == 201){
+          message = 'Livre ajouté à la collection !';
+          setState(() => status = ApiStatus.success);
+          widget.closeModalFunction();
+        } else {
+          message = "Erreur lors de l'ajout du livre";
+          setState(() => status = ApiStatus.error);
+        }
+      } on DioException catch (e) {
+          if (e.response != null) {
+          message = 'Erreur serveur';        }
+    message = 'Erreur de validation';
+}
   }
 
 
@@ -131,13 +176,18 @@ class _AddNewBookFormState extends State<AddNewBookForm> {
             ),
             CustomFilePicker(sendImage: handleImage,),
             ElevatedButton(
-              onPressed: (){}, 
+              onPressed: (){
+                addNewBook();
+              }, 
               child: Text('Valider',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface
                 ),
               )
-            )
+            ),
+            Container(
+              child: status == ApiStatus.loading ? CircularProgressIndicator() : Text('')
+              )
           ],
         ),
       ),

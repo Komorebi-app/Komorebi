@@ -9,6 +9,12 @@ class AddNewBookModal extends StatefulWidget {
 }
 
 class _AddNewBookState extends State<AddNewBookModal> {
+
+  void closeModal(){
+    Navigator.pop(context);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -35,13 +41,13 @@ class _AddNewBookState extends State<AddNewBookModal> {
                                 child: IconButton(
                                   icon: Image.asset('assets/closeButton.png', width: 30,),
                                   iconSize: 40,
-                                  onPressed: () => Navigator.pop(context),
+                                  onPressed: () => closeModal(),
                                 ),
                               ),
                             )
                           ],
                         ),
-                          AddNewBookForm()
+                          AddNewBookForm(closeModalFunction: closeModal)
                       ],
                     ),
                   ),
