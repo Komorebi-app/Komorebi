@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,13 +12,12 @@ import 'package:komorebi/features/auth/domain/usecases/login.dart';
 import 'package:komorebi/features/auth/domain/usecases/logout.dart';
 import 'package:komorebi/features/auth/domain/usecases/register.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:komorebi/features/theme/theme_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 
 GetIt getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   await dotenv.load(fileName: '.env');
 
   HydratedBloc.storage = await HydratedStorage.build(
@@ -34,6 +32,8 @@ Future<void> initDependencies() async {
       aOptions: AndroidOptions(encryptedSharedPreferences: true),
     ),
   );
+
+  getIt.registerLazySingleton(() => ThemeCubit());
 
   initAuth();
 }
