@@ -70,8 +70,10 @@ class _SearchPageState extends State<SearchPage> {
         };
 
         await Dio().post(
-          '${AppConfig.apiUrl}/book/add-manual-to-library/',
-          options: Options(headers: {'Authorization': 'Bearer $token'}),
+          '${AppConfig.apiUrl}/book/add-to-library/',
+          options: Options(
+            headers: {'Authorization': 'Bearer $token'},
+          ),
           data: payload,
         );
 
