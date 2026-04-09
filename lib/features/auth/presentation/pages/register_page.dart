@@ -18,9 +18,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final storage = const FlutterSecureStorage();
 
   final usernameController = TextEditingController();
+  final firstnameController = TextEditingController();
+  final lastnameController = TextEditingController();
   final emailController = TextEditingController();
-  final firstController = TextEditingController();
-  final lastController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
@@ -29,8 +29,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
     usernameController.dispose();
     emailController.dispose();
-    firstController.dispose();
-    lastController.dispose();
+    firstnameController.dispose();
+    lastnameController.dispose();
     passwordController.dispose();
   }
 
@@ -45,9 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
       context.read<AuthBloc>().add(
         AuthRegisterEvent(
           username: usernameController.text.trim(),
-          firstname: usernameController.text.trim(),
-          lastname: usernameController.text.trim(),
-          email: usernameController.text.trim(),
+          firstname: firstnameController.text.trim(),
+          lastname: lastnameController.text.trim(),
+          email: emailController.text.trim(),
           password: passwordController.text.trim(),
         ),
       );
@@ -68,7 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
               context.replace('/');
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Erreur lors de la connexion")),
+                SnackBar(content: Text("Erreur lors de l'inscription")),
               );
             }
             break;
@@ -124,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      controller: lastController,
+                      controller: lastnameController,
                     ),
                     TextFormField(
                       decoration: InputDecoration(
@@ -137,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      controller: firstController,
+                      controller: firstnameController,
                     ),
                     TextFormField(
                       decoration: InputDecoration(

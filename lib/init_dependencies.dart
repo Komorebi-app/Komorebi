@@ -11,6 +11,7 @@ import 'package:komorebi/features/auth/domain/services/auth_service.dart';
 import 'package:komorebi/features/auth/domain/usecases/get_user.dart';
 import 'package:komorebi/features/auth/domain/usecases/login.dart';
 import 'package:komorebi/features/auth/domain/usecases/logout.dart';
+import 'package:komorebi/features/auth/domain/usecases/register.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -53,12 +54,14 @@ void initAuth() {
     ..registerFactory<GetUser>(() => GetUser(getIt()))
     ..registerFactory<Login>(() => Login(getIt()))
     ..registerFactory<Logout>(() => Logout(getIt()))
+    ..registerFactory<Register>(() => Register(getIt()))
     // Bloc
     ..registerLazySingleton<AuthBloc>(
       () => AuthBloc(
         getUser: getIt(),
         login: getIt(),
-        logout: getIt()
+        logout: getIt(),
+        register: getIt(),
       ),
     );
 }
