@@ -39,7 +39,6 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         ),
       );
 
-      print(response.statusCode);
       if (response.statusCode == 200) {
         return UserModel.fromMap(response.data);
       }
