@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'collection_page.dart';
 import './search_page.dart';
-import './profile_page.dart';
+import '../features/auth/presentation/pages/profile_page.dart';
 import '../widgets/app_title.dart';
 import '../widgets/bottom_bar.dart';
 

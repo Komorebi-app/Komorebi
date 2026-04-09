@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../pages/login_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
 
 class DisconnectButton extends StatefulWidget {
   const DisconnectButton({super.key});
@@ -12,18 +13,13 @@ class DisconnectButton extends StatefulWidget {
 class _DisconnectButtonState extends State<DisconnectButton> {
   @override
   Widget build(BuildContext context) {
-    void logout(BuildContext context) async {
-      final storage = const FlutterSecureStorage();
-      await storage.delete(key: 'jwt_token');
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-        (route) => false,
-      );
-    }
-
     return ElevatedButton(
-      onPressed: () => logout(context),
+      onPressed: () {
+        context.read<AuthBloc>().add(AuthLogoutEvent());
+        if (context.mounted) {
+          context.push<void>('/auth');
+        }
+      },
       child: const Text('Déconnexion'),
     );
   }
