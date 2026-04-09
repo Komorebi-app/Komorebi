@@ -56,19 +56,10 @@ class _SearchPageState extends State<SearchPage> {
       if (token != null) {
         final payload = {
           'isbn': book.isbn,
-          'title': book.title,
-          'author': book.author,
-          'language': book.language,
-          'pages': book.pages,
-          'published': book.published is DateTime 
-            ? (book.published as DateTime).toIso8601String().split('T')[0]
-            : book.published,
-          'resume': book.resume,
-          'cover_url': book.coverUrl,
         };
         
         await Dio().post(
-          '${AppConfig.apiUrl}/book/add-manual-to-library/',
+          '${AppConfig.apiUrl}/book/add-to-library/',
           options: Options(
             headers: {'Authorization': 'Bearer $token'},
           ),
