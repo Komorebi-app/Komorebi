@@ -1,3 +1,4 @@
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:komorebi/init_dependencies.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,8 @@ import './theme/app_theme.dart';
 import 'router/app_router.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await initDependencies();
 
@@ -20,6 +22,8 @@ Future<void> main() async {
       child: MainApp(),
     ),
   );
+
+  FlutterNativeSplash.remove();
 }
 
 class MainApp extends StatelessWidget {
