@@ -1,0 +1,15 @@
+{
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système",
+    "theme": "Apparence",
+    "lang": "Langage",
+    "en": "Anglais",
+    "fr": "Français",
+    "logout": "Déconnexion",
+    "appbar": "Votre havre de lecture",
+    "home": "Accueil",
+    "collection": "Collection",
+    "search": "Rechercher",
+    "profile": "Profil"
+}

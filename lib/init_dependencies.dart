@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -23,6 +24,8 @@ import 'package:path_provider/path_provider.dart';
 GetIt getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
+  await EasyLocalization.ensureInitialized();
+
   await dotenv.load(fileName: '.env');
 
   HydratedBloc.storage = await HydratedStorage.build(

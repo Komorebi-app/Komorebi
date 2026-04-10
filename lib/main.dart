@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:komorebi/features/collection/presentation/bloc/collection_bloc.dart';
@@ -21,7 +22,16 @@ Future<void> main() async {
         BlocProvider(create: (context) => getIt<AuthBloc>()),
         BlocProvider(create: (context) => getIt<CollectionBloc>()),
       ],
-      child: MainApp(),
+      child: EasyLocalization(
+        supportedLocales: [
+          Locale('en'),
+          Locale('fr'),
+        ],
+        saveLocale: true,
+        path: 'assets/translations',
+        fallbackLocale: Locale('en'),
+        child: MainApp(),
+      ),
     ),
   );
 
@@ -36,6 +46,9 @@ class MainApp extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, themeMode) {
         return MaterialApp.router(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           themeMode: themeMode,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,

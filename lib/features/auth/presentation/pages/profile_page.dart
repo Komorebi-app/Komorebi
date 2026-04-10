@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -63,25 +64,25 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: .center,
                     children: [
                       Text(
-                        'Apparence',
+                        context.tr('theme'),
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       SegmentedButton<ThemeMode>(
-                        segments: const [
+                        segments: [
                           ButtonSegment(
                             value: ThemeMode.system,
                             icon: Icon(Icons.settings_brightness_outlined),
-                            label: Text('Système'),
+                            label: Text(context.tr('system')),
                           ),
                           ButtonSegment(
                             value: ThemeMode.light,
                             icon: Icon(Icons.light_mode_outlined),
-                            label: Text('Clair'),
+                            label: Text(context.tr('light')),
                           ),
                           ButtonSegment(
                             value: ThemeMode.dark,
                             icon: Icon(Icons.dark_mode_outlined),
-                            label: Text('Sombre'),
+                            label: Text(context.tr('dark')),
                           ),
                         ],
                         selected: {context.watch<ThemeCubit>().state},
@@ -97,7 +98,34 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
-                  const Spacer(),
+                  Column(
+                    children: [
+                      Text(
+                        context.tr('lang'),
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      SegmentedButton<String>(
+                        segments: [
+                          ButtonSegment(
+                            value: 'en',
+                            label: Text(context.tr('en')),
+                          ),
+                          ButtonSegment(
+                            value: 'fr',
+                            label: Text(context.tr('fr')),
+                          ),
+                        ],
+                        selected: {context.locale.languageCode},
+                        onSelectionChanged: (Set<String> newSelection) {
+                          context.setLocale(Locale(newSelection.first));
+                        },
+                        style: SegmentedButton.styleFrom(
+                          selectedBackgroundColor: colors.primaryContainer,
+                          selectedForegroundColor: colors.onPrimaryContainer,
+                        ),
+                      ),
+                    ],
+                  ),
                   const DisconnectButton(),
                 ],
               ),

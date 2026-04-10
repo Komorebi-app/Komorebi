@@ -1,0 +1,15 @@
+{
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "theme": "Theme",
+    "lang": "Language",
+    "en": "English",
+    "fr": "Frensh",
+    "logout": "Logout",
+    "appbar": "Your reading haven",
+    "home": "Home",
+    "collection": "Collection",
+    "search": "Search",
+    "profile": "Profile"
+}

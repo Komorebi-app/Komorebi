@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AppTitle extends StatelessWidget {
@@ -36,7 +37,7 @@ class AppTitle extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Text(
-                'Votre havre de lecture',
+                context.tr('appbar'),
                 style: Theme.of(context).textTheme.titleLarge!.apply(
                   color: Theme.of(context).colorScheme.tertiary
                 ),

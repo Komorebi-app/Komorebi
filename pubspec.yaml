@@ -25,6 +25,7 @@ dependencies:
   file_picker: ^11.0.2
   open_app_file: ^4.0.4
   flutter_native_splash: ^2.4.7
+  easy_localization: ^3.0.8
 
 dev_dependencies:
   flutter_test:
@@ -37,4 +38,5 @@ flutter:
   assets:
     - assets/
     - assets/icon/
+    - assets/translations/
     - .env
