@@ -6,6 +6,7 @@ import 'package:komorebi/features/auth/domain/services/auth_service.dart';
 import 'package:komorebi/init_dependencies.dart';
 import 'package:komorebi/models/book_model.dart';
 import '../widgets/add_new_book_modal.dart';
+import 'package:komorebi/widgets/layout.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

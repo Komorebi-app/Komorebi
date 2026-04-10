@@ -1,5 +1,6 @@
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:komorebi/features/collection/presentation/bloc/collection_bloc.dart';
 import 'package:komorebi/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
       providers: [
         BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => getIt<AuthBloc>()),
+        BlocProvider(create: (context) => getIt<CollectionBloc>()),
       ],
       child: MainApp(),
     ),
