@@ -57,18 +57,7 @@ class _SearchPageState extends State<SearchPage> {
         getIt<FlutterSecureStorage>(),
       ).getToken();
       if (token != null) {
-        final payload = {
-          'isbn': book.isbn,
-          'title': book.title,
-          'author': book.author,
-          'language': book.language,
-          'pages': book.pages,
-          'published': book.published is DateTime
-              ? (book.published as DateTime).toIso8601String().split('T')[0]
-              : book.published,
-          'resume': book.resume,
-          'cover_url': book.coverUrl,
-        };
+        final payload = {'isbn': book.isbn};
 
         await Dio().post(
           '${AppConfig.apiUrl}/book/add-to-library/',
@@ -162,50 +151,49 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Barre de recherche
-        TextField(
-          controller: _controller,
-          onSubmitted: _handleSearch,
-          decoration: InputDecoration(
-            hintText: "Entrez un titre de livre",
-            border: const OutlineInputBorder(),
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.send),
-              onPressed: () => _handleSearch(_controller.text),
+    return Layout(
+      child: Column(
+        children: [
+          // Barre de recherche
+          TextField(
+            controller: _controller,
+            onSubmitted: _handleSearch,
+            decoration: InputDecoration(
+              hintText: "Entrez un titre de livre",
+              border: const OutlineInputBorder(),
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: () => _handleSearch(_controller.text),
+              ),
             ),
           ),
-        ),
 
-        AddNewBookModal(),
+          AddNewBookModal(),
 
-        // Liste des résultats
-        Expanded(
-          child: ListView.builder(
-            itemCount: _results.length,
-            itemBuilder: (context, index) {
-              final book = _results[index];
-              return ListTile(
-                leading: book.coverUrl.isNotEmpty
-                    ? Image.network(
-                        book.coverUrl,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      )
-                    : Image.network(
-                        'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif',
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
-                title: Text(book.title),
-                subtitle: Text(book.author),
-                onTap: () => _dialogBuilder(context, book),
-              );
-            },
+          // Liste des résultats
+          Expanded(
+            child: ListView.builder(
+              itemCount: _results.length,
+              itemBuilder: (context, index) {
+                final book = _results[index];
+                return ListTile(
+                  leading: Image.network(
+                    book.coverUrl,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.book, size: 50);
+                    },
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text(book.title),
+                  subtitle: Text(book.author),
+                  onTap: () => _dialogBuilder(context, book),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
