@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:komorebi/features/auth/data/models/user_model.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:komorebi/features/collection/presentation/bloc/collection_bloc.dart';
 import 'package:komorebi/features/collection/presentation/widgets/book_card.dart';
@@ -24,8 +23,12 @@ class _CollectionState extends State<Collection> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthSuccess && state.user == null) {
-          context.replace('/auth');
+        if (state is AuthSuccess) {
+          if (state.user == null) {
+            context.replace('/auth');
+          } else {
+            context.read<CollectionBloc>().add(CollectionGetEvent(id: state.user!.id));
+          }
         }
         if (state is AuthLoggoutSuccess) {
           context.go('/auth');
@@ -34,19 +37,20 @@ class _CollectionState extends State<Collection> {
       builder: (context, state) {
         switch (state) {
           case AuthSuccess _:
-            final UserModel user = state.user!;
-            context.read<CollectionBloc>().add(CollectionGetEvent(id: user.id));
             return BlocBuilder<CollectionBloc, CollectionState>(
               builder: (BuildContext context, CollectionState state) {
                 switch (state) {
                   case CollectionSuccess _:
-                    return SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(vertical: 32),
-                      child: Column(
-                        spacing: 16,
-                        children: state.collection.books.reversed.map((book) {
-                          return BookCard(book: book);
-                        }).toList(),
+                    return SizedBox(
+                      height: double.infinity,
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
+                        child: Column(
+                          spacing: 16,
+                          children: state.collection.books.reversed.map((book) {
+                            return BookCard(book: book);
+                          }).toList(),
+                        ),
                       ),
                     );
                   case CollectionFailure _:

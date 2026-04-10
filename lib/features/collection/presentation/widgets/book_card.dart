@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:komorebi/features/auth/domain/services/auth_service.dart';
 import 'package:komorebi/features/collection/data/models/book_model.dart';
+import 'package:komorebi/init_dependencies.dart';
 
 class BookCard extends StatefulWidget {
   final BookModel book;
@@ -32,12 +35,45 @@ class _BookCardState extends State<BookCard> {
                     padding: EdgeInsets.all(15),
                     child: Align(
                       alignment: Alignment.center,
-                      child: Image.network(
-                        widget.book.coverUrl ?? "",
-                        errorBuilder: (context, error, stackTrace) {
-                          return Icon(Icons.book);
+                      child: FutureBuilder<String?>(
+                        future: AuthService(
+                          getIt<FlutterSecureStorage>(),
+                        ).getToken(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const SizedBox(
+                              width: 90,
+                              height:
+                                  120,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            );
+                          }
+
+                          if (snapshot.hasError ||
+                              !snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return const SizedBox(
+                              width: 90,
+                              child: Icon(Icons.book, size: 50),
+                            );
+                          }
+
+                          return Image.network(
+                            widget.book.coverUrl ?? "",
+                            width: 90,
+                            headers: {
+                              'Authorization': 'Bearer ${snapshot.data}',
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.book, size: 50);
+                            },
+                          );
                         },
-                        width: 90,
                       ),
                     ),
                   ),

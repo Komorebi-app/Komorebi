@@ -14,7 +14,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Layout(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: .center,
         children: [
           TextField(decoration: InputDecoration(prefixIcon: Icon(Icons.search))),
           AddNewBookModal()

@@ -38,8 +38,6 @@ class BookModel extends Book {
   }
 
   factory BookModel.fromMap(Map<String, dynamic> map) {
-    map.forEach((key, value) => print('$key: ${value.runtimeType}'));
-    print(map['author']);
     return BookModel(
       id: map['id'] as int,
       author: AuthorModel.fromMap(map['author']),
