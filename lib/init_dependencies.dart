@@ -12,6 +12,11 @@ import 'package:komorebi/features/auth/domain/usecases/login.dart';
 import 'package:komorebi/features/auth/domain/usecases/logout.dart';
 import 'package:komorebi/features/auth/domain/usecases/register.dart';
 import 'package:komorebi/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:komorebi/features/collection/data/datasources/collection_remote_datasource.dart';
+import 'package:komorebi/features/collection/data/repositories/collection_repository_impl.dart';
+import 'package:komorebi/features/collection/domain/repositories/collection_repository.dart';
+import 'package:komorebi/features/collection/domain/usecases/get_collection.dart';
+import 'package:komorebi/features/collection/presentation/bloc/collection_bloc.dart';
 import 'package:komorebi/features/theme/theme_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -36,6 +41,7 @@ Future<void> initDependencies() async {
   getIt.registerLazySingleton(() => ThemeCubit());
 
   initAuth();
+  initCollection();
 }
 
 void initAuth() {
@@ -62,6 +68,24 @@ void initAuth() {
         login: getIt(),
         logout: getIt(),
         register: getIt(),
+      ),
+    );
+}
+
+void initCollection() {
+  getIt
+    // Datasource
+    ..registerFactory<CollectionRemoteDatasource>(
+      () => CollectionRemoteDatasourceImpl(dio: getIt(), service: getIt()),
+    )
+    // Repositories
+    ..registerCachedFactory<CollectionRepository>(() => CollectionRepositoryImpl(getIt()))
+    // Usecases
+    ..registerFactory<GetCollection>(() => GetCollection(getIt()))
+    // Bloc
+    ..registerLazySingleton<CollectionBloc>(
+      () => CollectionBloc(
+        getCollection: getIt(),
       ),
     );
 }

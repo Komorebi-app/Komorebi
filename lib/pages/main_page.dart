@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
-import 'collection_page.dart';
+import '../features/collection/presentation/pages/collection_page.dart';
 import './search_page.dart';
 import '../features/auth/presentation/pages/profile_page.dart';
 import '../widgets/app_title.dart';
@@ -41,7 +41,7 @@ class _MainPageState extends State<MainPage> {
       ),
       body: Container(
         margin: const EdgeInsets.only(top: 16),
-        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         width: double.infinity,
         decoration: BoxDecoration(
           color: colors.surface,
