@@ -9,6 +9,7 @@ class UserModel extends User {
     required super.firstname,
     required super.lastname,
     required super.username,
+    required super.library,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,6 +19,7 @@ class UserModel extends User {
       'first_name': firstname,
       'last_name': lastname,
       'username': username,
+      'library': library,
     };
   }
 
@@ -28,6 +30,7 @@ class UserModel extends User {
       firstname: map['first_name'] as String,
       lastname: map['last_name'] as String,
       username: map['username'] as String,
+      library: map['library'] as int,
     );
   }
 

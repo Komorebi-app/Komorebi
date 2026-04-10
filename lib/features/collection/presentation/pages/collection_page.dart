@@ -27,7 +27,7 @@ class _CollectionState extends State<Collection> {
           if (state.user == null) {
             context.replace('/auth');
           } else {
-            context.read<CollectionBloc>().add(CollectionGetEvent(id: state.user!.id));
+            context.read<CollectionBloc>().add(CollectionGetEvent(id: state.user!.library));
           }
         }
         if (state is AuthLoggoutSuccess) {
